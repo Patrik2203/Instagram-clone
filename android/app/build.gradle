@@ -1,0 +1,51 @@
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("dev.flutter.flutter-gradle-plugin")
+    id("com.google.gms.google-services") // Make sure this is included
+}
+
+android {
+    namespace = "com.example.instagram_flutter"
+    compileSdk = 34 // Make sure to set the correct SDK version
+
+    defaultConfig {
+        applicationId = "com.example.instagram_flutter"
+        minSdk = 24  // Minimum SDK version
+        targetSdk = 34 // Updated target SDK to 34
+        versionCode = 1 // Set your version code
+        versionName = "1.0" // Set your version name
+        multiDexEnabled = true // Enable multiDex if your app requires it
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11" // Updated from 1.8 to 11
+    }
+
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug") // Use debug signing for release (for testing)
+        }
+    }
+}
+
+flutter {
+    source = "../.." // Make sure this path is correct
+}
+
+// Firebase dependencies
+dependencies {
+    // Import the Firebase BoM (Bill of Materials)
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+
+    // Add Firebase Analytics or other Firebase services you plan to use
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+}
